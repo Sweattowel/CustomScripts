@@ -1,4 +1,4 @@
-﻿$BadList = @("m365copilot", "OneDrive", "TestNullprocess2");
+﻿$BadList = @("m365copilot", "OneDrive", "OneDrive.Sync.Service", "MicrosoftEdgeUpdate", "Cortana", "TestNullprocess2");
 
 Write-Host("Being running DisableUnwantedProcesses Program!") -ForegroundColor Green;
 
@@ -16,7 +16,7 @@ foreach ($B in $BadList)
 
     try
     {
-        Stop-Process -name $B;
+        Stop-Process -name $B -ErrorAction SilentlyContinue;
     }
     catch
     {
