@@ -1,27 +1,8 @@
-import sys
-import subprocess
 import json
+import subprocess
 
 from http.server import BaseHTTPRequestHandler, HTTPServer
-
-print("Starting Program")
-
-for i in sys.argv[1:]:
-    print("arg = " + i)
-
-print(len(sys.argv))
-
-if len(sys.argv) != 4:
-    print("Incorrect argumentCount")
-    quit()
-
-if sys.argv[1] == "" or sys.argv[2] == "" or sys.argv[3] == "":
-    print("Inadequate arguments, Provide: \nhostName port password")
-    quit()
-
-hostName = sys.argv[1]
-serverPort = int(sys.argv[2])
-password = sys.argv[3]
+from Init import serverSettings
 
 class Server(BaseHTTPRequestHandler):
     def __init__(self, request, client_address, server):
@@ -36,6 +17,8 @@ class Server(BaseHTTPRequestHandler):
         self.wfile.write(bytes("Burn...","utf-8"))
 
     def do_POST(self):
+        settings = self.server.settings
+
         self.send_response(200)
         self.send_header("Content-Type", "application/json")
         self.end_headers()
@@ -46,7 +29,7 @@ class Server(BaseHTTPRequestHandler):
         try:
             data = json.loads(body)
             passAttempt = data.get("pass")
-            if passAttempt == password:
+            if passAttempt == settings.passWord:
                 self.wfile.write(bytes("Password Success \n", "utf-8"))
                 jsonBody = data.get("body")
                 command = jsonBody.get("Command")
@@ -90,15 +73,3 @@ class Server(BaseHTTPRequestHandler):
                 return 'echo -e "Successfully tested script"'
             case _:
                 return None
-
-webServer = HTTPServer((hostName, serverPort), Server)
-print("Server started http://%s:%s" % (hostName, serverPort))
-
-try:
-    webServer.serve_forever()
-except KeyboardInterrupt:
-    pass
-
-webServer.server_close()
-
-print("Program Complete")
