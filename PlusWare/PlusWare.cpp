@@ -12,7 +12,5 @@ int main()
     // g++ -o PluswareCompiled PlusWare.cpp -lX11 -lGL -lpthread -lpng -lstdc++fs -std=c++17
 
 
-
-
     return 0;
 }

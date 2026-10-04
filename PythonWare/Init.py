@@ -16,7 +16,7 @@ def InitSettings(args):
     cacheSettings = serverSettings()
 
     maxLength = len(args)
-
+    
     for i in args[1:]:
         match i:
             case "-host":
