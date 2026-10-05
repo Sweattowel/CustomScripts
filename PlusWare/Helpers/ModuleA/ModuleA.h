@@ -1,0 +1,3 @@
+#pragma Once
+
+void ModuleA();

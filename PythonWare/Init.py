@@ -17,14 +17,16 @@ def InitSettings(args):
 
     maxLength = len(args)
     
-    for i in args[1:]:
-        match i:
+    for i in range(0, maxLength):
+        curr = args[i]
+        
+        match curr:
             case "-host":
                 if i + 1 <= maxLength:
                     cacheSettings.hostName = args[i + 1]
             case "-port":
                 if i + 1 <= maxLength:
-                    cacheSettings.serverPort = args[i + 1]
+                    cacheSettings.serverPort = int(args[i + 1])
             case "-pass":
                 if i + 1 <= maxLength:
                     cacheSettings.passWord = args[i + 1]
